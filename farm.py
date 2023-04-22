@@ -10,6 +10,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QPixmap, QIcon
 import random
 
+from Plant_Class import Plant_Class
+
 
 # from Plant_Class import Plant_Class
 
@@ -36,6 +38,8 @@ class Ui_Form(object):
         self.chosen_plant = 0  # currently chosen plant to place on an empty field
 
         #########################################
+        self.already_planted = False  # TEST!!!!!!!!!!!!!!!!!!
+        self.testPlant = Plant_Class
         self.pictures = ['assets/04_Cucumber.png', 'assets/03_Cranberry.png',
                          'assets/22_Strawberry.png', 'assets/23_Watermelon.png',
                          'assets/11_Grapes_Green.png', 'assets/14_Kiwi.png',
@@ -59,6 +63,7 @@ class Ui_Form(object):
                                  "}")
         self.slot1.setText("")
         self.slot1.setObjectName("slot1")
+        self.slot1.clicked.connect(self.field1)
         self.slot2 = QtWidgets.QPushButton(parent=Form)
         self.slot2.setGeometry(QtCore.QRect(90, 20, 51, 51))
         self.slot2.setStyleSheet("QPushButton {\n"
@@ -811,6 +816,61 @@ class Ui_Form(object):
         self.chosen_plant = 7
 
     # after collecting ready plants
+    def harvest(self, plant: Plant_Class):
+        if plant.ready == True:
+            if plant.index == 0:
+                self.inventory[0] = self.inventory[0] + 2
+                self.amount1.display(self.inventory[0])
+            elif plant.index == 1:
+                self.inventory[1] = self.inventory[1] + 2
+                self.amount2.display(self.inventory[1])
+            elif plant.index == 2:
+                self.inventory[2] = self.inventory[2] + 2
+                self.amount3.display(self.inventory[2])
+            elif plant.index == 3:
+                self.inventory[3] += 2
+                self.amount4.display(self.inventory[3])
+            elif plant.index == 4:
+                self.inventory[4] += 2
+                self.amount5.display(self.inventory[4])
+            elif plant.index == 5:
+                self.inventory[5] += 2
+                self.amount6.display(self.inventory[5])
+            elif plant.index == 6:
+                self.inventory[6] += 2
+                self.amount7.display(self.inventory[6])
+            elif plant.index == 7:
+                self.inventory[7] += 2
+                self.amount8.display(self.inventory[7])
+            plant.place.setIcon(QIcon(QPixmap('assets/empty.png')))
+
+    # planting on empty places
+
+    def field1(self):
+        if self.already_planted == False:
+            if self.inventory[self.chosen_plant] > 0:
+                crop1 = Plant_Class(self.grow_time[self.chosen_plant], self.slot1, self.pictures[self.chosen_plant],
+                                    self.chosen_plant,
+                                    QPixmap('assets/icons2.png'))
+                self.inventory[self.chosen_plant] -= 1
+                self.updateDisplay()
+                self.testPlant = crop1
+                self.already_planted = True
+        elif self.already_planted == True:
+            self.harvest(self.testPlant)
+            if self.testPlant.ready == True:
+                self.already_planted = False
+
+    # method to update all inventory displayers
+    def updateDisplay(self):
+        self.amount1.display(self.inventory[0])
+        self.amount2.display(self.inventory[1])
+        self.amount3.display(self.inventory[2])
+        self.amount4.display(self.inventory[3])
+        self.amount5.display(self.inventory[4])
+        self.amount6.display(self.inventory[5])
+        self.amount7.display(self.inventory[6])
+        self.amount8.display(self.inventory[7])
 
     #######################################################################################
     def retranslateUi(self, Form):
