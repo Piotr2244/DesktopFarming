@@ -24,6 +24,7 @@ class Ui_Form(object):
         # init standard price
         self.buyprices = [2, 5, 10, 25, 50, 100, 200, 500]
         self.sellprices = [1, 3, 5, 12, 25, 50, 100, 250]
+        self.planting_List = []
         self.setupUi(Form)
         self.beginProcedure()
         # Initialising money and crops amount
@@ -38,8 +39,8 @@ class Ui_Form(object):
         self.chosen_plant = 0  # currently chosen plant to place on an empty field
 
         #########################################
-        self.already_planted = False  # TEST!!!!!!!!!!!!!!!!!!
-        self.testPlant = Plant_Class
+        self.already_planted = [False for i in range(25)]
+        self.plant_class_list = [Plant_Class() for _ in range(25)]
         self.pictures = ['assets/04_Cucumber.png', 'assets/03_Cranberry.png',
                          'assets/22_Strawberry.png', 'assets/23_Watermelon.png',
                          'assets/11_Grapes_Green.png', 'assets/14_Kiwi.png',
@@ -63,7 +64,7 @@ class Ui_Form(object):
                                  "}")
         self.slot1.setText("")
         self.slot1.setObjectName("slot1")
-        self.slot1.clicked.connect(self.field1)
+        self.slot1.clicked.connect(lambda: self.field1(0))
         self.slot2 = QtWidgets.QPushButton(parent=Form)
         self.slot2.setGeometry(QtCore.QRect(90, 20, 51, 51))
         self.slot2.setStyleSheet("QPushButton {\n"
@@ -71,6 +72,7 @@ class Ui_Form(object):
                                  "}")
         self.slot2.setText("")
         self.slot2.setObjectName("slot2")
+        self.slot2.clicked.connect(lambda: self.field1(1))
         self.slot3 = QtWidgets.QPushButton(parent=Form)
         self.slot3.setGeometry(QtCore.QRect(160, 20, 51, 51))
         self.slot3.setStyleSheet("QPushButton {\n"
@@ -78,6 +80,7 @@ class Ui_Form(object):
                                  "}")
         self.slot3.setText("")
         self.slot3.setObjectName("slot3")
+        self.slot3.clicked.connect(lambda: self.field1(2))
         self.slot4 = QtWidgets.QPushButton(parent=Form)
         self.slot4.setGeometry(QtCore.QRect(230, 20, 51, 51))
         self.slot4.setStyleSheet("QPushButton {\n"
@@ -85,6 +88,7 @@ class Ui_Form(object):
                                  "}")
         self.slot4.setText("")
         self.slot4.setObjectName("slot4")
+        self.slot4.clicked.connect(lambda: self.field1(3))
         self.slot5 = QtWidgets.QPushButton(parent=Form)
         self.slot5.setGeometry(QtCore.QRect(300, 20, 51, 51))
         self.slot5.setStyleSheet("QPushButton {\n"
@@ -92,6 +96,7 @@ class Ui_Form(object):
                                  "}")
         self.slot5.setText("")
         self.slot5.setObjectName("slot5")
+        self.slot5.clicked.connect(lambda: self.field1(4))
         self.slot10 = QtWidgets.QPushButton(parent=Form)
         self.slot10.setGeometry(QtCore.QRect(300, 90, 51, 51))
         self.slot10.setStyleSheet("QPushButton {\n"
@@ -99,6 +104,7 @@ class Ui_Form(object):
                                   "}")
         self.slot10.setText("")
         self.slot10.setObjectName("slot10")
+        self.slot10.clicked.connect(lambda: self.field1(9))
         self.slot7 = QtWidgets.QPushButton(parent=Form)
         self.slot7.setGeometry(QtCore.QRect(90, 90, 51, 51))
         self.slot7.setStyleSheet("QPushButton {\n"
@@ -106,6 +112,7 @@ class Ui_Form(object):
                                  "}")
         self.slot7.setText("")
         self.slot7.setObjectName("slot7")
+        self.slot7.clicked.connect(lambda: self.field1(6))
         self.slot9 = QtWidgets.QPushButton(parent=Form)
         self.slot9.setGeometry(QtCore.QRect(230, 90, 51, 51))
         self.slot9.setStyleSheet("QPushButton {\n"
@@ -113,6 +120,7 @@ class Ui_Form(object):
                                  "}")
         self.slot9.setText("")
         self.slot9.setObjectName("slot9")
+        self.slot9.clicked.connect(lambda: self.field1(8))
         self.slot6 = QtWidgets.QPushButton(parent=Form)
         self.slot6.setGeometry(QtCore.QRect(20, 90, 51, 51))
         self.slot6.setStyleSheet("QPushButton {\n"
@@ -120,6 +128,7 @@ class Ui_Form(object):
                                  "}")
         self.slot6.setText("")
         self.slot6.setObjectName("slot6")
+        self.slot6.clicked.connect(lambda: self.field1(5))
         self.slot8 = QtWidgets.QPushButton(parent=Form)
         self.slot8.setGeometry(QtCore.QRect(160, 90, 51, 51))
         self.slot8.setStyleSheet("QPushButton {\n"
@@ -127,6 +136,7 @@ class Ui_Form(object):
                                  "}")
         self.slot8.setText("")
         self.slot8.setObjectName("slot8")
+        self.slot8.clicked.connect(lambda: self.field1(7))
         self.slot15 = QtWidgets.QPushButton(parent=Form)
         self.slot15.setGeometry(QtCore.QRect(300, 160, 51, 51))
         self.slot15.setStyleSheet("QPushButton {\n"
@@ -134,6 +144,7 @@ class Ui_Form(object):
                                   "}")
         self.slot15.setText("")
         self.slot15.setObjectName("slot15")
+        self.slot15.clicked.connect(lambda: self.field1(14))
         self.slot12 = QtWidgets.QPushButton(parent=Form)
         self.slot12.setGeometry(QtCore.QRect(90, 160, 51, 51))
         self.slot12.setStyleSheet("QPushButton {\n"
@@ -141,6 +152,7 @@ class Ui_Form(object):
                                   "}")
         self.slot12.setText("")
         self.slot12.setObjectName("slot12")
+        self.slot12.clicked.connect(lambda: self.field1(11))
         self.slot14 = QtWidgets.QPushButton(parent=Form)
         self.slot14.setGeometry(QtCore.QRect(230, 160, 51, 51))
         self.slot14.setStyleSheet("QPushButton {\n"
@@ -148,6 +160,7 @@ class Ui_Form(object):
                                   "}")
         self.slot14.setText("")
         self.slot14.setObjectName("slot14")
+        self.slot14.clicked.connect(lambda: self.field1(13))
         self.slot11 = QtWidgets.QPushButton(parent=Form)
         self.slot11.setGeometry(QtCore.QRect(20, 160, 51, 51))
         self.slot11.setStyleSheet("QPushButton {\n"
@@ -155,6 +168,7 @@ class Ui_Form(object):
                                   "}")
         self.slot11.setText("")
         self.slot11.setObjectName("slot11")
+        self.slot11.clicked.connect(lambda: self.field1(10))
         self.slot13 = QtWidgets.QPushButton(parent=Form)
         self.slot13.setGeometry(QtCore.QRect(160, 160, 51, 51))
         self.slot13.setStyleSheet("QPushButton {\n"
@@ -162,6 +176,7 @@ class Ui_Form(object):
                                   "}")
         self.slot13.setText("")
         self.slot13.setObjectName("slot13")
+        self.slot13.clicked.connect(lambda: self.field1(12))
         self.slot20 = QtWidgets.QPushButton(parent=Form)
         self.slot20.setGeometry(QtCore.QRect(300, 230, 51, 51))
         self.slot20.setStyleSheet("QPushButton {\n"
@@ -169,6 +184,7 @@ class Ui_Form(object):
                                   "}")
         self.slot20.setText("")
         self.slot20.setObjectName("slot20")
+        self.slot20.clicked.connect(lambda: self.field1(19))
         self.slot17 = QtWidgets.QPushButton(parent=Form)
         self.slot17.setGeometry(QtCore.QRect(90, 230, 51, 51))
         self.slot17.setStyleSheet("QPushButton {\n"
@@ -176,6 +192,7 @@ class Ui_Form(object):
                                   "}")
         self.slot17.setText("")
         self.slot17.setObjectName("slot17")
+        self.slot17.clicked.connect(lambda: self.field1(16))
         self.slot19 = QtWidgets.QPushButton(parent=Form)
         self.slot19.setGeometry(QtCore.QRect(230, 230, 51, 51))
         self.slot19.setStyleSheet("QPushButton {\n"
@@ -183,6 +200,7 @@ class Ui_Form(object):
                                   "}")
         self.slot19.setText("")
         self.slot19.setObjectName("slot19")
+        self.slot19.clicked.connect(lambda: self.field1(18))
         self.slot16 = QtWidgets.QPushButton(parent=Form)
         self.slot16.setGeometry(QtCore.QRect(20, 230, 51, 51))
         self.slot16.setStyleSheet("QPushButton {\n"
@@ -190,6 +208,7 @@ class Ui_Form(object):
                                   "}")
         self.slot16.setText("")
         self.slot16.setObjectName("slot16")
+        self.slot16.clicked.connect(lambda: self.field1(15))
         self.slot18 = QtWidgets.QPushButton(parent=Form)
         self.slot18.setGeometry(QtCore.QRect(160, 230, 51, 51))
         self.slot18.setStyleSheet("QPushButton {\n"
@@ -197,6 +216,7 @@ class Ui_Form(object):
                                   "}")
         self.slot18.setText("")
         self.slot18.setObjectName("slot18")
+        self.slot18.clicked.connect(lambda: self.field1(17))
         self.slot25 = QtWidgets.QPushButton(parent=Form)
         self.slot25.setGeometry(QtCore.QRect(300, 300, 51, 51))
         self.slot25.setStyleSheet("QPushButton {\n"
@@ -204,6 +224,7 @@ class Ui_Form(object):
                                   "}")
         self.slot25.setText("")
         self.slot25.setObjectName("slot25")
+        self.slot25.clicked.connect(lambda: self.field1(24))
         self.slot22 = QtWidgets.QPushButton(parent=Form)
         self.slot22.setGeometry(QtCore.QRect(90, 300, 51, 51))
         self.slot22.setStyleSheet("QPushButton {\n"
@@ -211,6 +232,7 @@ class Ui_Form(object):
                                   "}")
         self.slot22.setText("")
         self.slot22.setObjectName("slot22")
+        self.slot22.clicked.connect(lambda: self.field1(21))
         self.slot24 = QtWidgets.QPushButton(parent=Form)
         self.slot24.setGeometry(QtCore.QRect(230, 300, 51, 51))
         self.slot24.setStyleSheet("QPushButton {\n"
@@ -218,6 +240,7 @@ class Ui_Form(object):
                                   "}")
         self.slot24.setText("")
         self.slot24.setObjectName("slot24")
+        self.slot24.clicked.connect(lambda: self.field1(23))
         self.slot21 = QtWidgets.QPushButton(parent=Form)
         self.slot21.setGeometry(QtCore.QRect(20, 300, 51, 51))
         self.slot21.setStyleSheet("QPushButton {\n"
@@ -225,6 +248,7 @@ class Ui_Form(object):
                                   "}")
         self.slot21.setText("")
         self.slot21.setObjectName("slot21")
+        self.slot21.clicked.connect(lambda: self.field1(20))
         self.slot23 = QtWidgets.QPushButton(parent=Form)
         self.slot23.setGeometry(QtCore.QRect(160, 300, 51, 51))
         self.slot23.setStyleSheet("QPushButton {\n"
@@ -232,6 +256,7 @@ class Ui_Form(object):
                                   "}")
         self.slot23.setText("")
         self.slot23.setObjectName("slot23")
+        self.slot23.clicked.connect(lambda: self.field1(22))
         self.plant1 = QtWidgets.QPushButton(parent=Form)
         self.plant1.setGeometry(QtCore.QRect(370, 70, 31, 31))
         self.plant1.setAutoFillBackground(False)
@@ -614,6 +639,12 @@ class Ui_Form(object):
         self.pb8.display(self.buyprices[7])
         self.ps8.display(self.sellprices[7])
 
+        self.planting_List = [self.slot1, self.slot2, self.slot3, self.slot4, self.slot5,
+                              self.slot6, self.slot7, self.slot8, self.slot9, self.slot10,
+                              self.slot11, self.slot12, self.slot13, self.slot14, self.slot15,
+                              self.slot16, self.slot17, self.slot18, self.slot19, self.slot20,
+                              self.slot21, self.slot22, self.slot23, self.slot24, self.slot25]
+
     ###buy new crops
     def item1Bought(self):
         if (self.currentMoney - self.buyprices[0]) >= 0:
@@ -682,8 +713,8 @@ class Ui_Form(object):
     def item2Sold(self):
         if self.inventory[1] > 0:
             self.inventory[1] = self.inventory[1] - 1
-            self.amount2.display(self.inventory[2])
-            self.currentMoney += self.sellprices[2]
+            self.amount2.display(self.inventory[1])
+            self.currentMoney += self.sellprices[1]
             self.money.display(self.currentMoney)
 
     def item3Sold(self):
@@ -816,50 +847,51 @@ class Ui_Form(object):
         self.chosen_plant = 7
 
     # after collecting ready plants
-    def harvest(self, plant: Plant_Class):
-        if plant.ready == True:
-            if plant.index == 0:
+    def harvest(self, plant):
+        if self.plant_class_list[plant].ready == True:
+            if self.plant_class_list[plant].index == 0:
                 self.inventory[0] = self.inventory[0] + 2
                 self.amount1.display(self.inventory[0])
-            elif plant.index == 1:
+            elif self.plant_class_list[plant].index == 1:
                 self.inventory[1] = self.inventory[1] + 2
                 self.amount2.display(self.inventory[1])
-            elif plant.index == 2:
+            elif self.plant_class_list[plant].index == 2:
                 self.inventory[2] = self.inventory[2] + 2
                 self.amount3.display(self.inventory[2])
-            elif plant.index == 3:
+            elif self.plant_class_list[plant].index == 3:
                 self.inventory[3] += 2
                 self.amount4.display(self.inventory[3])
-            elif plant.index == 4:
+            elif self.plant_class_list[plant].index == 4:
                 self.inventory[4] += 2
                 self.amount5.display(self.inventory[4])
-            elif plant.index == 5:
+            elif self.plant_class_list[plant].index == 5:
                 self.inventory[5] += 2
                 self.amount6.display(self.inventory[5])
-            elif plant.index == 6:
+            elif self.plant_class_list[plant].index == 6:
                 self.inventory[6] += 2
                 self.amount7.display(self.inventory[6])
-            elif plant.index == 7:
+            elif self.plant_class_list[plant].index == 7:
                 self.inventory[7] += 2
                 self.amount8.display(self.inventory[7])
-            plant.place.setIcon(QIcon(QPixmap('assets/empty.png')))
+            self.plant_class_list[plant].place.setIcon(QIcon(QPixmap('assets/empty.png')))
 
     # planting on empty places
 
-    def field1(self):
-        if self.already_planted == False:
+    def field1(self, place_index):
+        if self.already_planted[place_index] == False:
             if self.inventory[self.chosen_plant] > 0:
-                crop1 = Plant_Class(self.grow_time[self.chosen_plant], self.slot1, self.pictures[self.chosen_plant],
+                crop1 = Plant_Class(self.grow_time[self.chosen_plant], self.planting_List[place_index],
+                                    self.pictures[self.chosen_plant],
                                     self.chosen_plant,
                                     QPixmap('assets/icons2.png'))
                 self.inventory[self.chosen_plant] -= 1
                 self.updateDisplay()
-                self.testPlant = crop1
-                self.already_planted = True
-        elif self.already_planted == True:
-            self.harvest(self.testPlant)
-            if self.testPlant.ready == True:
-                self.already_planted = False
+                self.plant_class_list[place_index] = crop1
+                self.already_planted[place_index] = True
+        elif self.already_planted[place_index] == True:
+            self.harvest(place_index)
+            if self.plant_class_list[place_index].ready == True:
+                self.already_planted[place_index] = False
 
     # method to update all inventory displayers
     def updateDisplay(self):
