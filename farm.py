@@ -26,8 +26,10 @@ class Ui_Form(object):
         self.sellprices = [1, 3, 5, 12, 25, 50, 100, 250]
         self.planting_List = []
         self.display_List = []
+        self.sell_price_display_list = []
+        self.buy_price_display_list = []
         self.setupUi(Form)
-        self.beginProcedure()
+
         # Initialising money and crops amount
         self.currentMoney = 100
         self.money.display(self.currentMoney)
@@ -42,11 +44,9 @@ class Ui_Form(object):
         #########################################
         self.already_planted = [False for i in range(25)]
         self.plant_class_list = [Plant_Class() for _ in range(25)]
-        self.pictures = ['assets/04_Cucumber.png', 'assets/03_Cranberry.png',
-                         'assets/22_Strawberry.png', 'assets/23_Watermelon.png',
-                         'assets/11_Grapes_Green.png', 'assets/14_Kiwi.png',
-                         'assets/15_Lemon.png', 'assets/09_Fig.png'
-                         ]
+        self.pictures = []
+        self.beginProcedure()
+        self.chosen_plant_list = []
 
     def setupUi(self, Form):
 
@@ -614,31 +614,14 @@ class Ui_Form(object):
 
     def beginProcedure(self):
 
-        self.plant1.setIcon(QIcon(QPixmap('assets/04_Cucumber.png')))
-        self.plant2.setIcon(QIcon(QPixmap('assets/03_Cranberry.png')))
-        self.plant3.setIcon(QIcon(QPixmap('assets/22_Strawberry.png')))
-        self.plant4.setIcon(QIcon(QPixmap('assets/23_Watermelon.png')))
-        self.plant5.setIcon(QIcon(QPixmap('assets/11_Grapes_Green.png')))
-        self.plant6.setIcon(QIcon(QPixmap('assets/14_Kiwi.png')))
-        self.plant7.setIcon(QIcon(QPixmap('assets/15_Lemon.png')))
-        self.plant8.setIcon(QIcon(QPixmap('assets/09_Fig.png')))
+        self.pictures = ['assets/04_Cucumber.png', 'assets/03_Cranberry.png',
+                         'assets/22_Strawberry.png', 'assets/23_Watermelon.png',
+                         'assets/11_Grapes_Green.png', 'assets/14_Kiwi.png',
+                         'assets/15_Lemon.png', 'assets/09_Fig.png'
+                         ]
 
-        self.pb1.display(self.buyprices[0])
-        self.ps1.display(self.sellprices[0])
-        self.pb2.display(self.buyprices[1])
-        self.ps2.display(self.sellprices[1])
-        self.pb3.display(self.buyprices[2])
-        self.ps3.display(self.sellprices[2])
-        self.pb4.display(self.buyprices[3])
-        self.ps4.display(self.sellprices[3])
-        self.pb5.display(self.buyprices[4])
-        self.ps5.display(self.sellprices[4])
-        self.pb6.display(self.buyprices[5])
-        self.ps6.display(self.sellprices[5])
-        self.pb7.display(self.buyprices[6])
-        self.ps7.display(self.sellprices[6])
-        self.pb8.display(self.buyprices[7])
-        self.ps8.display(self.sellprices[7])
+        self.chosen_plant_list = [self.plant1, self.plant2, self.plant3, self.plant4,
+                                  self.plant5, self.plant6, self.plant7, self.plant8]
 
         self.planting_List = [self.slot1, self.slot2, self.slot3, self.slot4, self.slot5,
                               self.slot6, self.slot7, self.slot8, self.slot9, self.slot10,
@@ -648,6 +631,17 @@ class Ui_Form(object):
 
         self.display_List = [self.amount1, self.amount2, self.amount3, self.amount4,
                              self.amount5, self.amount6, self.amount7, self.amount8]
+
+        self.buy_price_display_list = [self.pb1, self.pb2, self.pb3, self.pb4,
+                                       self.pb5, self.pb6, self.pb7, self.pb8, ]
+
+        self.sell_price_display_list = [self.ps1, self.ps2, self.ps3, self.ps4,
+                                        self.ps5, self.ps6, self.ps7, self.ps8]
+
+        for x in range(8):
+            self.buy_price_display_list[x].display(self.buyprices[x])
+            self.sell_price_display_list[x].display(self.sellprices[x])
+            self.chosen_plant_list[x].setIcon(QIcon(QPixmap(self.pictures[x])))
 
     ###buy new crops
     def item_bought(self, index):
@@ -667,31 +661,12 @@ class Ui_Form(object):
 
     # making buy and sell values change
     def rerollValues(self):
+        random_buy_price = [1, 2, 3, 4, 5, 10, 20, 30]
+        random_sell_price = [1, 2, 3, 4, 4, 8, 15, 20]
+
         for x in range(8):
-            if x == 0:
-                random_buy = random.randint(-1, 1)
-                random_sell = random.randint(-1, 1)
-            if x == 1:
-                random_buy = random.randint(-2, 2)
-                random_sell = random.randint(-2, 2)
-            if x == 2:
-                random_buy = random.randint(-3, 3)
-                random_sell = random.randint(-3, 3)
-            if x == 3:
-                random_buy = random.randint(-4, 4)
-                random_sell = random.randint(-4, 4)
-            if x == 4:
-                random_buy = random.randint(-5, 5)
-                random_sell = random.randint(-4, 4)
-            if x == 5:
-                random_buy = random.randint(-10, 10)
-                random_sell = random.randint(-8, 8)
-            if x == 6:
-                random_buy = random.randint(-20, 20)
-                random_sell = random.randint(-15, 15)
-            if x == 7:
-                random_buy = random.randint(-30, 30)
-                random_sell = random.randint(-15, 15)
+            random_buy = random.randint(-random_buy_price[x], random_buy_price[x])
+            random_sell = random.randint(-random_sell_price[x], random_sell_price[x])
 
             self.buyprices[x] = self.buyprices[x] + random_buy
             if self.buyprices[x] <= 0:
@@ -702,30 +677,8 @@ class Ui_Form(object):
             if self.sellprices[x] > self.buyprices[x]:
                 self.sellprices[x] = self.buyprices[x]
 
-            if x == 0:
-                self.pb1.display(self.buyprices[x])
-                self.ps1.display(self.sellprices[x])
-            if x == 1:
-                self.pb2.display(self.buyprices[x])
-                self.ps2.display(self.sellprices[x])
-            if x == 2:
-                self.pb3.display(self.buyprices[x])
-                self.ps3.display(self.sellprices[x])
-            if x == 3:
-                self.pb4.display(self.buyprices[x])
-                self.ps4.display(self.sellprices[x])
-            if x == 4:
-                self.pb5.display(self.buyprices[x])
-                self.ps5.display(self.sellprices[x])
-            if x == 5:
-                self.pb6.display(self.buyprices[x])
-                self.ps6.display(self.sellprices[x])
-            if x == 6:
-                self.pb7.display(self.buyprices[x])
-                self.ps7.display(self.sellprices[x])
-            if x == 7:
-                self.pb8.display(self.buyprices[x])
-                self.ps8.display(self.sellprices[x])
+            self.buy_price_display_list[x].display(self.buyprices[x])
+            self.sell_price_display_list[x].display(self.sellprices[x])
 
     # setting currently chosen plant
     def chosen1(self, index):
