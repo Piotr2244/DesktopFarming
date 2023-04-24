@@ -1,7 +1,7 @@
 <h1>Desktop Farm</h1>
 
 This is a simple desktop game written in Python. The player can buy crops, plant them, and then sell them for a profit.
-With more money, the farmer can buy more expensive plants that grow slower but can be sold for an even bigger profit.
+With more money, the farmer can buy more expensive plants that grow slower but can be sold at an even bigger profit.
 Build your small farm and thrive!
 
 <img width="518" alt="Zrzut ekranu 2023-04-23 124140" src="https://user-images.githubusercontent.com/72267881/233835532-a7c8e2b5-6b90-4b36-add6-6731542dcaff.png">
