@@ -11,4 +11,4 @@ Your money is visible in the corner on the right. To buy or sell, just click the
 Your inventory is visible next to the corresponding crop icon. To plant something, click the crop button of the plant you want to grow,
 and then click on an available planting field (there are 25 of them). After some time, the plants will be ready to harvest. To collect them,
 click on the plants and check your inventory.
-Each planted crop yields 2 new plants after harvesting. If you know any synonyms for 'crop' or 'plant', feel free to use them to avoid repetition
+Each planted crop yields 2 new plants after harvesting.
